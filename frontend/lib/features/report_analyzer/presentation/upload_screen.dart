@@ -1,10 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_theme.dart';
+import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/button.dart';
 import '../../../core/utils/file_storage_service.dart'; 
 import '../../../core/constants/app_constants.dart';
-import 'package:go_router/go_router.dart';
 
 class UploadScreen extends StatefulWidget {
   const UploadScreen({super.key});
@@ -34,23 +33,24 @@ class _UploadScreenState extends State<UploadScreen> {
   @override
   Widget build(BuildContext context) {
     final fileName = _selectedReport?.path.split('/').last;
+    final theme = Theme.of(context); 
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Upload Report', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Upload Report'), 
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: AppConstants.screenPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Medical Report Analyzer', style: Theme.of(context).textTheme.headlineMedium),
-            const SizedBox(height: 8),
-            const Text(
+            Text('Medical Report Analyzer', style: theme.textTheme.headlineMedium),
+            const SizedBox(height: AppConstants.paddingS),
+            Text(
               'Upload your lab results (CBC, cholesterol, etc.) as a PDF or Image. We will extract the key parameters and explain them simply.',
-              style: TextStyle(color: AppTheme.textMuted, height: 1.4),
+              style: theme.textTheme.bodyMedium?.copyWith(height: 1.4), 
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: AppConstants.paddingXL),
             
             GestureDetector(
               onTap: _isLoading ? null : _handleFileSelection,
@@ -58,32 +58,36 @@ class _UploadScreenState extends State<UploadScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 48),
                 decoration: BoxDecoration(
-                  color: AppTheme.surfaceColor,
-                  borderRadius: BorderRadius.circular(12),
+                  color: theme.colorScheme.surface, 
+                  borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
                   border: Border.all(
-                    color: _selectedReport != null ? AppTheme.primaryColor : AppTheme.borderColor,
+                    color: _selectedReport != null 
+                        ? theme.colorScheme.primary 
+                        : theme.dividerColor.withOpacity(0.2),
                     width: 2,
                   ),
                 ),
                 child: Column(
                   children: [
                     if (_isLoading)
-                      const CircularProgressIndicator(color: AppTheme.primaryColor)
+                      CircularProgressIndicator(color: theme.colorScheme.primary)
                     else ...[
                       Icon(
                         _selectedReport != null ? Icons.check_circle : Icons.upload_file,
                         size: 48,
-                        color: _selectedReport != null ? AppTheme.primaryColor : AppTheme.textMuted,
+                        color: _selectedReport != null 
+                            ? theme.colorScheme.primary 
+                            : theme.colorScheme.onSurface.withOpacity(0.5), 
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppConstants.paddingL),
                       Text(
                         _selectedReport != null ? 'File Selected' : 'Tap to browse files',
-                        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: AppTypography.bodyLarge),
+                        style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: AppConstants.paddingS),
                       Text(
                         fileName ?? 'Supports PDF, JPG, or PNG',
-                        style: const TextStyle(color: AppTheme.textMuted, fontSize: AppTypography.bodyMedium),
+                        style: theme.textTheme.bodyMedium,
                       ),
                     ],
                   ],

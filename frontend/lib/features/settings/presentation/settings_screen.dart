@@ -2,27 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/constants/app_constants.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Settings'), 
         centerTitle: false,
       ),
       body: ListView(
         padding: AppConstants.screenPadding,
         children: [
-          _buildSectionHeader('Account'),
+          _buildSectionHeader(context, 'Account'),
           _buildSettingTile(
+            context: context,
             icon: Icons.person_outline,
             title: 'Personal Information',
             subtitle: 'Manage your health profile data',
             onTap: () => context.push('/profile'),
           ),
           _buildSettingTile(
+            context: context,
             icon: Icons.lock_outline,
             title: 'Security',
             subtitle: 'Password and biometric settings',
@@ -30,28 +35,55 @@ class SettingsScreen extends StatelessWidget {
           ),
           
           const SizedBox(height: AppConstants.paddingL),
-          _buildSectionHeader('Preferences'),
+          _buildSectionHeader(context, 'Preferences'),
           _buildSettingTile(
+            context: context,
             icon: Icons.notifications_none,
             title: 'Notifications',
             subtitle: 'Configure health alerts and reminders',
             onTap: () {},
           ),
-          _buildSettingTile(
-            icon: Icons.dark_mode_outlined,
-            title: 'Appearance',
-            subtitle: 'Switch between light and dark mode',
-            onTap: () {},
+          
+          ValueListenableBuilder<ThemeMode>(
+            valueListenable: AppTheme.themeNotifier,
+            builder: (context, themeMode, _) {
+              final isDark = themeMode == ThemeMode.dark;
+              
+              return Container(
+                margin: const EdgeInsets.only(bottom: AppConstants.paddingS),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surface,
+                  borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
+                  border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
+                ),
+                child: SwitchListTile(
+                  activeColor: theme.colorScheme.primary,
+                  secondary: Icon(
+                    isDark ? Icons.dark_mode : Icons.light_mode, 
+                    color: theme.colorScheme.primary,
+                  ),
+                  title: Text('Dark Mode', style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
+                  subtitle: Text('Switch between light and dark themes', style: theme.textTheme.bodyMedium),
+                  value: isDark,
+                  onChanged: (bool value) {
+                    AppTheme.themeNotifier.value = value ? ThemeMode.dark : ThemeMode.light;
+                  },
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppConstants.radiusMedium)),
+                ),
+              );
+            }
           ),
 
           const SizedBox(height: AppConstants.paddingL),
-          _buildSectionHeader('Support & Legal'),
+          _buildSectionHeader(context, 'Support & Legal'),
           _buildSettingTile(
+            context: context,
             icon: Icons.help_outline,
             title: 'Help Center',
             onTap: () {},
           ),
           _buildSettingTile(
+            context: context,
             icon: Icons.privacy_tip_outlined,
             title: 'Privacy Policy',
             onTap: () {},
@@ -59,10 +91,8 @@ class SettingsScreen extends StatelessWidget {
 
           const SizedBox(height: AppConstants.paddingXL),
           
-          // Logout Button
           TextButton(
             onPressed: () {
-              // Clear session and go to login
               context.go('/login');
             },
             style: TextButton.styleFrom(
@@ -83,7 +113,7 @@ class SettingsScreen extends StatelessWidget {
           Center(
             child: Text(
               'Version ${AppConstants.appVersion}',
-              style: const TextStyle(color: AppTheme.textMuted, fontSize: AppTypography.labelTiny),
+              style: theme.textTheme.labelSmall, 
             ),
           ),
         ],
@@ -91,14 +121,12 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader(String title) {
+  Widget _buildSectionHeader(BuildContext context, String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppConstants.paddingS),
       child: Text(
         title.toUpperCase(),
-        style: const TextStyle(
-          color: AppTheme.textMuted,
-          fontSize: AppTypography.labelTiny,
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
           fontWeight: FontWeight.bold,
           letterSpacing: 1.2,
         ),
@@ -107,24 +135,27 @@ class SettingsScreen extends StatelessWidget {
   }
 
   Widget _buildSettingTile({
+    required BuildContext context,
     required IconData icon,
     required String title,
     String? subtitle,
     required VoidCallback onTap,
   }) {
+    final theme = Theme.of(context);
+    
     return Container(
       margin: const EdgeInsets.only(bottom: AppConstants.paddingS),
       decoration: BoxDecoration(
-        color: AppTheme.backgroundColor,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
-        border: Border.all(color: AppTheme.borderColor),
+        border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
       ),
       child: ListTile(
         onTap: onTap,
-        leading: Icon(icon, color: AppTheme.primaryColor),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-        subtitle: subtitle != null ? Text(subtitle, style: const TextStyle(fontSize: AppTypography.bodyMedium)) : null,
-        trailing: const Icon(Icons.chevron_right, size: 20, color: AppTheme.textMuted),
+        leading: Icon(icon, color: theme.colorScheme.primary),
+        title: Text(title, style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
+        subtitle: subtitle != null ? Text(subtitle, style: theme.textTheme.bodyMedium) : null,
+        trailing: Icon(Icons.chevron_right, size: 20, color: theme.colorScheme.onSurface.withOpacity(0.5)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppConstants.radiusMedium)),
       ),
     );
