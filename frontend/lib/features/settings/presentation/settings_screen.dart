@@ -6,6 +6,10 @@ import '../../../core/constants/app_constants.dart';
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
+  void _safeAction(VoidCallback action) {
+    Future.microtask(action);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -14,6 +18,12 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Settings'), 
         centerTitle: false,
+        leading: context.canPop() 
+          ? IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new, size: 18),
+              onPressed: () => _safeAction(() => context.pop()),
+            ) 
+          : null,
       ),
       body: ListView(
         padding: AppConstants.screenPadding,
@@ -24,14 +34,14 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.person_outline,
             title: 'Personal Information',
             subtitle: 'Manage your health profile data',
-            onTap: () => context.push('/profile'),
+            onTap: () => _safeAction(() => context.push('/profile')),
           ),
           _buildSettingTile(
             context: context,
             icon: Icons.lock_outline,
             title: 'Security',
             subtitle: 'Password and biometric settings',
-            onTap: () {},
+            onTap: () => _safeAction(() => print("Security tapped")),
           ),
           
           const SizedBox(height: AppConstants.paddingL),
@@ -41,7 +51,7 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.notifications_none,
             title: 'Notifications',
             subtitle: 'Configure health alerts and reminders',
-            onTap: () {},
+            onTap: () => _safeAction(() => print("Notifications tapped")),
           ),
           
           ValueListenableBuilder<ThemeMode>(
@@ -66,7 +76,9 @@ class SettingsScreen extends StatelessWidget {
                   subtitle: Text('Switch between light and dark themes', style: theme.textTheme.bodyMedium),
                   value: isDark,
                   onChanged: (bool value) {
-                    AppTheme.themeNotifier.value = value ? ThemeMode.dark : ThemeMode.light;
+                    _safeAction(() {
+                      AppTheme.themeNotifier.value = value ? ThemeMode.dark : ThemeMode.light;
+                    });
                   },
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppConstants.radiusMedium)),
                 ),
@@ -80,21 +92,19 @@ class SettingsScreen extends StatelessWidget {
             context: context,
             icon: Icons.help_outline,
             title: 'Help Center',
-            onTap: () {},
+            onTap: () => _safeAction(() => context.push('/support')), 
           ),
           _buildSettingTile(
             context: context,
             icon: Icons.privacy_tip_outlined,
             title: 'Privacy Policy',
-            onTap: () {},
+            onTap: () => _safeAction(() => print("Privacy tapped")),
           ),
 
           const SizedBox(height: AppConstants.paddingXL),
           
           TextButton(
-            onPressed: () {
-              context.go('/login');
-            },
+            onPressed: () => _safeAction(() => context.go('/login')),
             style: TextButton.styleFrom(
               foregroundColor: Colors.red.shade700,
               padding: const EdgeInsets.symmetric(vertical: AppConstants.paddingM),

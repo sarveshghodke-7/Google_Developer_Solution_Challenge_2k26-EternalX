@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../medications/presentation/medications_screen.dart';
+import '../../visits/presentation/visits_screen.dart';
 
 class MainWrapper extends StatefulWidget {
   final Widget child; 
@@ -41,12 +43,12 @@ class _MainWrapperState extends State<MainWrapper> {
       fabIcon = Icons.medication_outlined;
       fabLabel = "Add Med";
       isExtended = true;
-      fabAction = () => print("Open Med Sheet"); 
+      fabAction = () => showAddMedicationSheet(context);
     } else if (location == '/visits') {
       fabIcon = Icons.calendar_month;
       fabLabel = "Book Visit";
       isExtended = true;
-      fabAction = () => print("Book Visit");
+      fabAction = () => showBookVisitSheet(context);
     } else {
       fabIcon = Icons.add;
       fabAction = () => Future.microtask(() => context.push('/upload'));

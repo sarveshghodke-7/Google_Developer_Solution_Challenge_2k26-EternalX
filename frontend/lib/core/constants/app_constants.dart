@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppConstants {
   static const String appName = "MediCore";
-  static const String appVersion = "1.0.0";
+  static const String appVersion = "1.2.0";
 
   // API
   static const String apiBaseUrl = "https://your-api-endpoint.com/v1";
