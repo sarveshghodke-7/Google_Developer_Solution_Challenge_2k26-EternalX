@@ -25,13 +25,13 @@ class ShadcnInput extends StatelessWidget {
         hintStyle: const TextStyle(color: AppTheme.textMuted, fontSize: 14),
         filled: true,
         fillColor: AppTheme.backgroundColor,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+        contentPadding:AppConstants.inputPadding,
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(6), 
+          borderRadius: BorderRadius.circular(AppConstants.radiusSmall), 
           borderSide: const BorderSide(color: AppTheme.borderColor),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppConstants.borderRadius),
+          borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
           borderSide: const BorderSide(color: AppTheme.primaryColor, width: 2),
         ),
       ),

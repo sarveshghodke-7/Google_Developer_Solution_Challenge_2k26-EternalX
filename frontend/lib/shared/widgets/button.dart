@@ -24,7 +24,7 @@ class ShadcnButton extends StatelessWidget {
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppTheme.textPrimary,
                 side: const BorderSide(color: AppTheme.borderColor),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppConstants.borderRadius)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppConstants.radiusMedium)),
               ),
               child: Text(text, style: const TextStyle(fontWeight: FontWeight.w500)),
             )
@@ -34,7 +34,7 @@ class ShadcnButton extends StatelessWidget {
                 backgroundColor: AppTheme.primaryColor,
                 foregroundColor: Colors.white,
                 elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppConstants.borderRadius)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppConstants.radiusMedium)),
               ),
               child: Text(text, style: const TextStyle(fontWeight: FontWeight.w500)),
             ),

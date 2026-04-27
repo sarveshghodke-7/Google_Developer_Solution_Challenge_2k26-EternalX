@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/constants/app_constants.dart';
 
 enum MedicalCardVariant { primary, quick, trend, progress }
 
@@ -85,7 +86,7 @@ class MedicalCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
         border: border,
         boxShadow: isPrimary ? [BoxShadow(color: AppTheme.primaryColor.withOpacity(0.2), blurRadius: 10, offset: const Offset(0, 4))] : null,
       ),
@@ -93,9 +94,9 @@ class MedicalCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(AppConstants.defaultPadding),
             child: _buildContent(contentColor),
           ),
         ),
@@ -136,7 +137,7 @@ class MedicalCard extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(color: Colors.teal.shade50, borderRadius: BorderRadius.circular(8)),
+              decoration: BoxDecoration(color: Colors.teal.shade50, borderRadius: BorderRadius.circular(AppConstants.radiusSmall)),
               child: Icon(icon, color: Colors.teal),
             ),
             const SizedBox(width: 16),
@@ -169,7 +170,7 @@ class MedicalCard extends StatelessWidget {
               backgroundColor: AppTheme.borderColor,
               color: AppTheme.primaryColor,
               minHeight: 6,
-              borderRadius: BorderRadius.circular(3),
+              borderRadius: BorderRadius.circular(AppConstants.radiusExtraSmall),
             ),
           ],
         );
