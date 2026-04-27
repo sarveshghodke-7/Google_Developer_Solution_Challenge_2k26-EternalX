@@ -3,7 +3,7 @@ import '../../core/theme/app_theme.dart';
 import '../../core/constants/app_constants.dart';
 class ShadcnButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed; // nullable — null renders the button as disabled
   final bool isOutlined;
 
   const ShadcnButton({

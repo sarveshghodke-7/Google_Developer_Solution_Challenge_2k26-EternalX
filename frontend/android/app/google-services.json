@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "862073087249",
+    "project_id": "healthlens-5fc36",
+    "storage_bucket": "healthlens-5fc36.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862073087249:android:330aa0775d3573e04d18b0",
+        "android_client_info": {
+          "package_name": "com.example.frontend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeg1w6R940dKYz0_znEOSEfEIJZISsTfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

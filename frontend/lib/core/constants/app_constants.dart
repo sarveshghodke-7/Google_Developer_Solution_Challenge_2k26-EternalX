@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 class AppConstants {
   static const String appName = "MediCore";
   static const String appVersion = "1.0.0";
-  static const double cardElevation = 0.0; 
-  static const String apiBaseUrl = "https://your-api-endpoint.com/v1";
-  static const int uploadSizeLimitBytes = 5 * 1024 * 1024; 
-  static const String geminiModel = "gemini-1.5-pro"; 
-  static const int cacheDurationHours = 24; 
+  static const double cardElevation = 0.0;
+
+  /// Firebase Functions base URL.
+  /// Format: https://<region>-<projectId>.cloudfunctions.net/<functionName>
+  /// For local emulator: http://127.0.0.1:5001/healthlens-5fc36/us-central1/api
+  static const String apiBaseUrl =
+      'https://us-central1-healthlens-5fc36.cloudfunctions.net/api';
+
+  static const int uploadSizeLimitBytes = 25 * 1024 * 1024; // 25MB
 
   // radius 
   static const double _baseRadius = 12.0;
