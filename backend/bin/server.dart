@@ -8,18 +8,27 @@ import 'package:dotenv/dotenv.dart';
 
 const promptText = '''
 You are a medical data extraction assistant. 
-Analyze this medical report and return ONLY a raw JSON object matching this structure:
-{
-  "alerts": [{"title": "High Cholesterol", "severity": "high", "description": "..."}],
-  "parameters": [{"name": "LDL", "value": "160", "unit": "mg/dL", "status": "high"}],
-  "recommendations": ["Eat less saturated fat"]
-}
-Do not include markdown tags like ```json.
-''';
+Analyze this medical report and return the data strictly in Token-Oriented Object Notation (TOON).
+Always provide at least 3 general health recommendations based on the identified alerts.
+Do not use JSON. Do not include markdown formatting. 
+Output exactly matching this structure:
 
+<ALERTS>
+[title="High Cholesterol" severity="high" description="..."]
+</ALERTS>
+
+<PARAMETERS>
+[name="LDL" value="160" unit="mg/dL" status="high"]
+</PARAMETERS>
+
+<RECOMMENDATIONS>
+[text="Eat less saturated fat"]
+</RECOMMENDATIONS>
+''';
 
 final router = Router()
   ..post('/analyze-report', _analyzeReportHandler);
+
 late DotEnv env; 
 
 Future<Response> _analyzeReportHandler(Request request) async {
@@ -31,6 +40,7 @@ Future<Response> _analyzeReportHandler(Request request) async {
     final String mimeType = data['mimeType']; 
     final fileBytes = base64Decode(base64File);
     final apiKey = env['GEMINI_API_KEY']; 
+    
     if (apiKey == null || apiKey.isEmpty) {
       return Response.internalServerError(body: 'Server missing GEMINI_API_KEY in .env file');
     }
@@ -47,12 +57,13 @@ Future<Response> _analyzeReportHandler(Request request) async {
     print('Sending file to Gemini...');
     final response = await model.generateContent(content);
     print('Received data from Gemini!');
+    
+    print('AI Output:\n${response.text}');
 
     return Response.ok(
       response.text, 
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'text/plain'},
     );
-    print(response);
 
   } catch (e) {
     print('Error: $e');
