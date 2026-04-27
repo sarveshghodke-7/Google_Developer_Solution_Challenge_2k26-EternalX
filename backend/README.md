@@ -1,49 +1,78 @@
-A server app built using [Shelf](https://pub.dev/packages/shelf),
-configured to enable running with [Docker](https://www.docker.com/).
+# MediCore Dart Backend
 
-This sample code handles HTTP GET requests to `/` and `/echo/<message>`
+A lightweight, high-performance Dart API that extracts medical data from reports using **Gemini 2.5 Flash** and caches results using **Firebase Firestore**.
 
-# Running the sample
+## Quick Start
 
-## Running with the Dart SDK
+### 1. Prerequisites
 
-You can run the example with the [Dart SDK](https://dart.dev/get-dart)
-like this:
+* **Dart SDK**: [Install Dart](https://dart.dev/get-dart)
+* **Gemini API Key**: Get it from [Google AI Studio](https://aistudio.google.com/)
+* **Firebase Project**: A Firebase project with Firestore enabled.
 
-```
-$ dart run bin/server.dart
-Server listening on port 8080
-```
+### 2. Environment Setup
 
-And then from a second terminal:
-```
-$ curl http://0.0.0.0:8080
-Hello, World!
-$ curl http://0.0.0.0:8080/echo/I_love_Dart
-I_love_Dart
+Create a `.env` file in the root directory:
+
+```bash
+GEMINI_API_KEY=your_gemini_key_here
+PORT=8080
+FIREBASE_PROJECT_ID=your-actual-project-id-123
 ```
 
-## Running with Docker
+### 3. Firebase Service Account (JSON Token)
 
-If you have [Docker Desktop](https://www.docker.com/get-started) installed, you
-can build and run with the `docker` command:
+To allow the backend to cache data in your Firestore:
 
-```
-$ docker build . -t myserver
-$ docker run -it -p 8080:8080 myserver
-Server listening on port 8080
-```
+1. Go to **Firebase Console** > **Project Settings** > **Service Accounts**.
+2. Click **Generate New Private Key**.
+3. Download the JSON file.
+4. Rename it to `firebase-admin.json` and place it in the root of this project.
 
-And then from a second terminal:
-```
-$ curl http://0.0.0.0:8080
-Hello, World!
-$ curl http://0.0.0.0:8080/echo/I_love_Dart
-I_love_Dart
+### 4. Install Dependencies
+
+Run the following command to fetch all required packages:
+
+```bash
+dart pub get
 ```
 
-You should see the logging printed in the first terminal:
+### 5. Run the Server
+
+```bash
+dart run bin/server.dart
 ```
-2021-05-06T15:47:04.620417  0:00:00.000158 GET     [200] /
-2021-05-06T15:47:08.392928  0:00:00.001216 GET     [200] /echo/I_love_Dart
+
+The server will start at `http://0.0.0.0:8080`.
+
+---
+
+## 🛠 Features
+
+* **TOON Parser Support**: Returns data in Token-Oriented Object Notation for optimized frontend parsing.
+* **Intelligent Caching**: Uses SHA-256 file hashing. If the same file is uploaded twice, the server returns the cached result from Firestore instead of calling Gemini again.
+* **CORS Enabled**: Pre-configured to accept requests from Flutter web, mobile, and desktop.
+
+## 📡 API Endpoints
+
+### `POST /analyze-report`
+
+Expects a JSON body:
+
+```json
+{
+  "fileBytes": "base64_encoded_string",
+  "mimeType": "application/pdf"
+}
+```
+
+---
+
+### Tip for team
+
+If you want to run this in "Production mode", use:
+
+```bash
+dart compile exe bin/server.dart -o bin/server
+./bin/server
 ```
