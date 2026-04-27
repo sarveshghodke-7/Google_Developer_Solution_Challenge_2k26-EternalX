@@ -32,16 +32,41 @@ class _MainWrapperState extends State<MainWrapper> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context); 
-
+    final String location = GoRouterState.of(context).uri.path;
+    IconData fabIcon = Icons.add;
+    String fabLabel = "";
+    VoidCallback? fabAction;
+    bool isExtended = false;
+    if (location == '/medications') {
+      fabIcon = Icons.medication_outlined;
+      fabLabel = "Add Med";
+      isExtended = true;
+      fabAction = () => print("Open Med Sheet"); 
+    } else if (location == '/visits') {
+      fabIcon = Icons.calendar_month;
+      fabLabel = "Book Visit";
+      isExtended = true;
+      fabAction = () => print("Book Visit");
+    } else {
+      fabIcon = Icons.add;
+      fabAction = () => Future.microtask(() => context.push('/upload'));
+    }
     return Scaffold(
       body: widget.child,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push('/upload'),
-        backgroundColor: theme.colorScheme.primary,
-        shape: const CircleBorder(),
-        elevation: 4,
-        child: Icon(Icons.add, color: theme.colorScheme.onPrimary, size: 30),
+      floatingActionButton: isExtended 
+      ? FloatingActionButton.extended(
+          onPressed: fabAction,
+          backgroundColor: theme.colorScheme.primary,
+          icon: Icon(fabIcon, color: theme.colorScheme.onPrimary),
+          label: Text(fabLabel, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        )
+      : FloatingActionButton(
+          onPressed: fabAction,
+          backgroundColor: theme.colorScheme.primary,
+          shape: const CircleBorder(),
+          child: Icon(fabIcon, color: Colors.white, size: 30),
       ),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
       bottomNavigationBar: BottomAppBar(
@@ -57,7 +82,7 @@ class _MainWrapperState extends State<MainWrapper> {
               _buildNavIcon(context, icon: Icons.grid_view_rounded, index: 0, theme: theme),
               _buildNavIcon(context, icon: Icons.auto_graph_rounded, index: 1, theme: theme),
               
-              const SizedBox(width: 30),
+              const SizedBox(width: 50),
               
               _buildNavIcon(context, icon: Icons.person_outline_rounded, index: 2, theme: theme),
               _buildNavIcon(context, icon: Icons.settings_outlined, index: 3, theme: theme),

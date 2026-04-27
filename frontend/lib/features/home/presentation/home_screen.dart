@@ -7,6 +7,11 @@ import '../../../shared/widgets/medical_card.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  // Helper to handle safe navigation
+  void _safeNavigate(BuildContext context, String route) {
+    Future.microtask(() => context.push(route));
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -32,7 +37,7 @@ class HomeScreen extends StatelessWidget {
           left: AppConstants.paddingXL, 
           right: AppConstants.paddingXL, 
           top: AppConstants.paddingXL, 
-          bottom: 30.0,
+          bottom: 30.0, 
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +55,7 @@ class HomeScreen extends StatelessWidget {
               title: 'Analyze New Report',
               subtitle: 'Upload results for AI insights',
               icon: Icons.add_circle_outline,
-              onTap: () => context.push('/upload'),
+              onTap: () => _safeNavigate(context, '/upload'),
             ),
             
             const SizedBox(height: 32),
@@ -60,7 +65,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Text('Health Trends', style: theme.textTheme.titleMedium),
                 TextButton(
-                  onPressed: () => context.push('/timeline'),
+                  onPressed: () => _safeNavigate(context, '/timeline'),
                   child: const Text('See All'),
                 ),
               ],
@@ -71,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                 title: 'LDL Cholesterol',
                 subtitle: 'Down 12% since Jan',
                 icon: Icons.trending_down,
-                onTap: () => context.push('/timeline'),
+                onTap: () => _safeNavigate(context, '/timeline'),
             ),
             
             const SizedBox(height: 32),
@@ -83,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                 title: '7-Day No Sugar',
                 daysLeft: '4 days left',
                 progress: 0.42,
-                onTap: () => context.push('/campaigns'),
+                onTap: () => _safeNavigate(context, '/campaigns'),
             ),
             
             const SizedBox(height: 32),
@@ -99,10 +104,26 @@ class HomeScreen extends StatelessWidget {
                 mainAxisSpacing: AppConstants.paddingL,
                 childAspectRatio: 1.5,
                 children: [
-                  MedicalCard.quick(title: 'Meds', icon: Icons.medication_outlined, onTap: () => context.push('/medications')),
-                  MedicalCard.quick(title: 'Visits', icon: Icons.calendar_month_outlined, onTap: () => context.push('/visits')),
-                  MedicalCard.quick(title: 'Support', icon: Icons.chat_bubble_outline, onTap: () => context.push('/support')),
-                  MedicalCard.quick(title: 'Settings', icon: Icons.settings_outlined, onTap: () => context.push('/settings')), // Wired up settings!
+                  MedicalCard.quick(
+                    title: 'Meds', 
+                    icon: Icons.medication_outlined,
+                    onTap: () => _safeNavigate(context, '/medications'),
+                  ),
+                  MedicalCard.quick(
+                    title: 'Visits', 
+                    icon: Icons.calendar_month_outlined, 
+                    onTap: () => _safeNavigate(context, '/visits'),
+                  ),
+                  MedicalCard.quick(
+                    title: 'Support', 
+                    icon: Icons.chat_bubble_outline, 
+                    onTap: () => _safeNavigate(context, '/support'),
+                  ),
+                  MedicalCard.quick(
+                    title: 'Settings', 
+                    icon: Icons.settings_outlined, 
+                    onTap: () => _safeNavigate(context, '/settings'),
+                  ),
                 ],
             ),          
           ],

@@ -18,7 +18,7 @@ class MedicationsScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, size: 18),
-          onPressed: () => context.pop(),
+          onPressed: () => Future.microtask(() => context.pop()),
         ),
         title: const Text('Medications'),
       ),
@@ -35,15 +35,6 @@ class MedicationsScreen extends StatelessWidget {
 
           ...activeMeds.map((med) => _buildMedicationCard(context, med)),
         ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // TODO: Open bottom sheet or navigate to Add Medication form
-          print('Open Add Medication Form');
-        },
-        backgroundColor: theme.colorScheme.primary,
-        icon: Icon(Icons.add, color: theme.colorScheme.onPrimary),
-        label: Text('Add Med', style: TextStyle(color: theme.colorScheme.onPrimary, fontWeight: FontWeight.bold)),
       ),
     );
   }

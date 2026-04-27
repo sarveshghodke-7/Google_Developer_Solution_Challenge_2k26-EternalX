@@ -15,9 +15,10 @@ class VisitsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+                    
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, size: 18),
-          onPressed: () => context.pop(),
+          onPressed: () => Future.microtask(()=>context.pop()),
         ),
         title: const Text('Appointments'),
       ),
@@ -31,12 +32,6 @@ class VisitsScreen extends StatelessWidget {
 
           ...appointments.map((appt) => _buildAppointmentCard(context, appt)),
         ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        backgroundColor: theme.colorScheme.primary,
-        icon: Icon(Icons.calendar_month, color: theme.colorScheme.onPrimary),
-        label: Text('Book Visit', style: TextStyle(color: theme.colorScheme.onPrimary, fontWeight: FontWeight.bold)),
       ),
     );
   }

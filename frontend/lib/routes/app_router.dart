@@ -25,12 +25,7 @@ import '../features/support/presentation/support_screen.dart';
 final GoRouter appRouter = GoRouter(
   initialLocation: '/', 
   routes: <RouteBase>[
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const SplashScreen();
-      },
-    ),
+    GoRoute(path: '/',builder: (BuildContext context, GoRouterState state) {return const SplashScreen();},),
     GoRoute(
       path: '/login',
       builder: (BuildContext context, GoRouterState state) {
@@ -42,18 +37,6 @@ final GoRouter appRouter = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         return const RegisterScreen();
       },
-    ),
-    GoRoute(
-      path: '/medications',
-      builder: (context, state) => const MedicationsScreen(),
-    ),
-    GoRoute(
-      path: '/visits',
-      builder: (context, state) => const VisitsScreen(),
-    ),
-    GoRoute(
-      path: '/support',
-      builder: (context, state) => const SupportScreen(),
     ),
     ShellRoute(
       builder: (context, state, child) {
@@ -179,7 +162,18 @@ final GoRouter appRouter = GoRouter(
         return const ProfileScreen();
       },
     ),
-
+     GoRoute(
+      path: '/medications',
+      builder: (context, state) => const MedicationsScreen(),
+    ),
+    GoRoute(
+      path: '/visits',
+      builder: (context, state) => const VisitsScreen(),
+    ),
+    GoRoute(
+      path: '/support',
+      builder: (context, state) => const SupportScreen(),
+    ),
     ],
     ),
   ],
