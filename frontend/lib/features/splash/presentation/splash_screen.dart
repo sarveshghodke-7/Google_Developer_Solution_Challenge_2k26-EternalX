@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/constants/app_constants.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -34,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Icon(Icons.medical_services_outlined, size: 80, color: Colors.white),
             SizedBox(height: 24),
             Text(
-              'MediCare',
+              AppConstants.appName,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 32,

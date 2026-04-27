@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/widgets/button.dart';
+import '../data/report_insight_model.dart';
 
 class InsightsScreen extends StatelessWidget {
-  const InsightsScreen({super.key});
+  final ReportInsightModel insightData; 
+
+  const InsightsScreen({super.key, required this.insightData});
 
   @override
   Widget build(BuildContext context) {
@@ -21,31 +24,36 @@ class InsightsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Lipid Panel Blood Test', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            Text(insightData.reportTitle, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             const SizedBox(height: 4),
-            const Text('Analyzed on April 27, 2026', style: TextStyle(color: AppTheme.textMuted)),
+            Text('Analyzed on ${insightData.date}', style: const TextStyle(color: AppTheme.textMuted)),
             const SizedBox(height: 24),
-            _buildAlertCard(
-              context: context,
-              icon: Icons.warning_amber_rounded,
-              title: 'Attention Needed',
-              message: 'Your LDL Cholesterol (Bad Cholesterol) is elevated at 160 mg/dL.',
-              isWarning: true,
-            ),
-            const SizedBox(height: 24),
+
+            if (insightData.alerts.isNotEmpty) ...[
+              ...insightData.alerts.map((alert) => Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: _buildAlertCard(
+                      context: context,
+                      icon: alert.isWarning ? Icons.warning_amber_rounded : Icons.info_outline,
+                      title: alert.title,
+                      message: alert.message,
+                      isWarning: alert.isWarning,
+                    ),
+                  )),
+              const SizedBox(height: 8),
+            ],
+
             const Text('What it means', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
-            _buildInfoCard(
-              'Cholesterol is a waxy substance in your blood. While your body needs it to build cells, having too much LDL (bad) cholesterol can cause buildup in your arteries. This increases the risk of heart disease over time. Your levels are slightly above the normal range (under 100 mg/dL).',
-            ),
+            _buildInfoCard(insightData.explanation),
             const SizedBox(height: 24),
+
             const Text('Action Plan', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
-            _buildActionItem('Dietary Changes', 'Reduce saturated fats (found in red meat and full-fat dairy) and eliminate trans fats.'),
-            const SizedBox(height: 8),
-            _buildActionItem('Increase Omega-3s', 'Eat more foods rich in omega-3 fatty acids like salmon, walnuts, and flaxseeds.'),
-            const SizedBox(height: 8),
-            _buildActionItem('Exercise', 'Aim for 30 minutes of moderate exercise, like brisk walking, 5 times a week.'),
+            ...insightData.actions.map((action) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: _buildActionItem(action.title, action.description),
+                )),
             
             const SizedBox(height: 32),
             ShadcnButton(
@@ -56,8 +64,7 @@ class InsightsScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
+  }  
   // --- UI Helper Widgets for that clean look ---
 
   Widget _buildAlertCard({required BuildContext context, required IconData icon, required String title, required String message, bool isWarning = false}) {

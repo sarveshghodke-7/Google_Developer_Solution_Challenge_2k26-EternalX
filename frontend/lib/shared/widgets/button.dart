@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
-
+import '../../core/constants/app_constants.dart';
 class ShadcnButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -24,7 +24,7 @@ class ShadcnButton extends StatelessWidget {
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppTheme.textPrimary,
                 side: const BorderSide(color: AppTheme.borderColor),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppConstants.borderRadius)),
               ),
               child: Text(text, style: const TextStyle(fontWeight: FontWeight.w500)),
             )
@@ -34,7 +34,7 @@ class ShadcnButton extends StatelessWidget {
                 backgroundColor: AppTheme.primaryColor,
                 foregroundColor: Colors.white,
                 elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppConstants.borderRadius)),
               ),
               child: Text(text, style: const TextStyle(fontWeight: FontWeight.w500)),
             ),

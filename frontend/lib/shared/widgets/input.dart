@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
+import '../../core/constants/app_constants.dart';
+
 
 class ShadcnInput extends StatelessWidget {
   final String hintText;
@@ -29,7 +31,7 @@ class ShadcnInput extends StatelessWidget {
           borderSide: const BorderSide(color: AppTheme.borderColor),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(6),
+          borderRadius: BorderRadius.circular(AppConstants.borderRadius),
           borderSide: const BorderSide(color: AppTheme.primaryColor, width: 2),
         ),
       ),
