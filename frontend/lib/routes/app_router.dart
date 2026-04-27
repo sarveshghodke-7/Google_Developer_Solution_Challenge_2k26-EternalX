@@ -10,6 +10,8 @@ import '../features/report_analyzer/presentation/insights_screen.dart';
 import '../features/report_analyzer/data/report_insight_model.dart';
 import '../features/campaigns/presentation/campaigns_screen.dart';
 import '../features/campaigns/data/campaign_model.dart';
+import '../features/timeline/presentation/timeline_screen.dart';
+import '../features/timeline/data/timeline_model.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/', 
@@ -98,6 +100,45 @@ final GoRouter appRouter = GoRouter(
 
         final campaigns = mockApiData.map((json) => CampaignModel.fromJson(json)).toList();
         return CampaignsScreen(campaigns: campaigns);
+      },
+    ),
+    GoRoute(
+        path: '/timeline',
+        builder: (BuildContext context, GoRouterState state) {
+        final fullApiJson = {
+          "LDL Cholesterol": {
+            "metricName": "LDL Cholesterol",
+            "unit": "mg/dL",
+            "dataPoints": [
+              {"x": 0, "y": 185, "label": "Jan"},
+              {"x": 1, "y": 170, "label": "Feb"},
+              {"x": 2, "y": 175, "label": "Mar"},
+              {"x": 3, "y": 160, "label": "Apr"}
+            ],
+            "history": [
+              {"date": "April 27, 2026", "title": "Lipid Panel", "changeText": "-15 mg/dL", "isImprovement": true},
+              {"date": "March 15, 2026", "title": "Lipid Panel", "changeText": "+5 mg/dL", "isImprovement": false}
+            ]
+          },
+          "Fasting Glucose": {
+          "metricName": "Fasting Glucose",
+          "unit": "mg/dL",
+          "dataPoints": [
+            {"x": 0, "y": 95, "label": "Jan"},
+            {"x": 1, "y": 98, "label": "Feb"},
+            {"x": 2, "y": 110, "label": "Mar"},
+            {"x": 3, "y": 105, "label": "Apr"}
+          ],
+            "history": [
+            {"date": "April 10, 2026", "title": "Blood Sugar Test", "changeText": "-5 mg/dL", "isImprovement": true}
+            ]
+          }
+        };
+        final Map<String, TimelineModel> metricsData = fullApiJson.map(
+            (key, value) => MapEntry(key, TimelineModel.fromJson(value))
+            );
+
+        return TimelineScreen(metricsData: metricsData);
       },
     ),
   ],
