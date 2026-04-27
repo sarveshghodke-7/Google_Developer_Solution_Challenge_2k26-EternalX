@@ -17,6 +17,8 @@ class HealthApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Health Intelligence App',
       theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+
       themeMode: ThemeMode.light, 
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false, 

@@ -18,29 +18,30 @@ class RegisterScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
+          padding: AppConstants.screenPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Create account', style: Theme.of(context).textTheme.headlineMedium),
-              const SizedBox(height: 8),
-              const Text('Register to manage your healthcare.'),
-              const SizedBox(height: 32),
+              const SizedBox(height: AppConstants.paddingS),
               
-              const Text('Full Name', style: TextStyle(fontWeight: FontWeight.w500, fontSize: AppTypography.bodyMedium)),
-              const SizedBox(height: 8),
+              Text('Register to manage your healthcare.', style: Theme.of(context).textTheme.bodyMedium),
+              const SizedBox(height: AppConstants.paddingXL),
+              
+              Text('Full Name', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: AppConstants.paddingS),
               const ShadcnInput(hintText: 'Raju Rastogi'),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppConstants.paddingL),
 
-              const Text('Email', style: TextStyle(fontWeight: FontWeight.w500, fontSize: AppTypography.bodyMedium)),
-              const SizedBox(height: 8),
+              Text('Email', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: AppConstants.paddingS),
               const ShadcnInput(hintText: 'rajurastojixxx@gmail.com'),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppConstants.paddingL),
               
-              const Text('Password', style: TextStyle(fontWeight: FontWeight.w500, fontSize: AppTypography.bodyMedium)),
-              const SizedBox(height: 8),
+              Text('Password', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: AppConstants.paddingS),
               const ShadcnInput(hintText: '••••••••', isPassword: true),
-              const SizedBox(height: 32),
+              const SizedBox(height: AppConstants.paddingXL),
               
               ShadcnButton(
                 text: 'Register',

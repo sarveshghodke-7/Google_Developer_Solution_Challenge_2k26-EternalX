@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/input.dart';
 import '../../../shared/widgets/button.dart';
-import '../../../core/theme/app_theme.dart';
 import '../../../core/constants/app_constants.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -13,31 +12,31 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: AppConstants.screenPadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('Welcome back', style: Theme.of(context).textTheme.headlineMedium),
-              const SizedBox(height: 8),
-              const Text('Enter your details to access your portal.'),
-              const SizedBox(height: 32),
+              const SizedBox(height: AppConstants.paddingS),
+              Text('Enter your details to access your portal.', style: Theme.of(context).textTheme.bodyMedium),
+              const SizedBox(height: AppConstants.paddingXL),
               
-              const Text('Email', style: TextStyle(fontWeight: FontWeight.w500, fontSize: AppTypography.bodyMedium)),
-              const SizedBox(height: 8),
+              Text('Email', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: AppConstants.paddingS),
               const ShadcnInput(hintText: 'm.scott@example.com'),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppConstants.paddingL),
               
-              const Text('Password', style: TextStyle(fontWeight: FontWeight.w500, fontSize: AppTypography.bodyMedium)),
-              const SizedBox(height: 8),
+              Text('Password', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: AppConstants.paddingS),
               const ShadcnInput(hintText: '••••••••', isPassword: true),
-              const SizedBox(height: 32),
+              const SizedBox(height: AppConstants.paddingXL),
               
               ShadcnButton(
                 text: 'Sign In',
                 onPressed: () => context.go('/home'),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppConstants.paddingL),
               
               ShadcnButton(
                 text: 'Create an account',
