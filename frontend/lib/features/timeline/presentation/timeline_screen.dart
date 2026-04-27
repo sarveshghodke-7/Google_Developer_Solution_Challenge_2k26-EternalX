@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:go_router/go_router.dart';
-import '../../../core/theme/app_theme.dart';
 import '../data/timeline_model.dart'; 
 import '../../../core/constants/app_constants.dart';
 
@@ -26,36 +25,43 @@ class _TimelineScreenState extends State<TimelineScreen> {
   @override
   Widget build(BuildContext context) {
     final currentData = widget.metricsData[selectedMetric]!;
+    final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Health Timeline', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Health Timeline'), 
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
+        padding: AppConstants.screenPadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Your Health Trends', style: TextStyle(fontSize: AppTypography.titleLarge, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            Text('Track how your $selectedMetric is changing over time.', 
-              style: const TextStyle(color: AppTheme.textMuted)),
-            const SizedBox(height: 32),
+            Text('Your Health Trends', style: theme.textTheme.titleLarge),
+            const SizedBox(height: AppConstants.paddingS),
+            Text(
+              'Track how your $selectedMetric is changing over time.', 
+              style: theme.textTheme.bodyMedium,
+            ),
+            const SizedBox(height: AppConstants.paddingXL),
 
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: AppConstants.paddingL),
               decoration: BoxDecoration(
-                color: AppTheme.surfaceColor,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppTheme.borderColor),
+                color: theme.colorScheme.surface,
+                borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
+                border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
                   value: selectedMetric,
                   isExpanded: true,
-                  icon: const Icon(Icons.keyboard_arrow_down, color: AppTheme.textMuted),
+                  dropdownColor: theme.colorScheme.surface, 
+                  icon: Icon(Icons.keyboard_arrow_down, color: theme.colorScheme.onSurface.withOpacity(0.5)),
                   items: widget.metricsData.keys
-                      .map((metric) => DropdownMenuItem(value: metric, child: Text(metric)))
+                      .map((metric) => DropdownMenuItem(
+                            value: metric, 
+                            child: Text(metric, style: theme.textTheme.bodyLarge),
+                          ))
                       .toList(),
                   onChanged: (value) {
                     if (value != null) setState(() => selectedMetric = value);
@@ -63,14 +69,16 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: AppConstants.paddingXL),
 
-            _buildDynamicChart(currentData),
+            _buildDynamicChart(context, currentData),
             
-            const SizedBox(height: 32),
-            const Text('Past Reports', style: TextStyle(fontSize: AppTypography.titleMedium, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppConstants.paddingXL),
+            Text('Past Reports', style: theme.textTheme.titleMedium),
+            const SizedBox(height: AppConstants.paddingL),
+            
             ...currentData.history.map((report) => _buildHistoryItem(
+              context,
               report.date, 
               report.title, 
               report.changeText, 
@@ -82,14 +90,16 @@ class _TimelineScreenState extends State<TimelineScreen> {
     );
   }
 
-  Widget _buildDynamicChart(TimelineModel data) {
+  Widget _buildDynamicChart(BuildContext context, TimelineModel data) {
+    final theme = Theme.of(context);
+
     return Container(
       height: 300,
       padding: const EdgeInsets.only(right: 24, left: 8, top: 24, bottom: 12),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppTheme.borderColor),
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
+        border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
       ),
       child: LineChart(
         LineChartData(
@@ -97,7 +107,10 @@ class _TimelineScreenState extends State<TimelineScreen> {
             show: true,
             drawVerticalLine: false,
             horizontalInterval: 20,
-            getDrawingHorizontalLine: (value) => FlLine(color: AppTheme.borderColor, strokeWidth: 1),
+            getDrawingHorizontalLine: (value) => FlLine(
+              color: theme.dividerColor.withOpacity(0.1), 
+              strokeWidth: 1
+            ),
           ),
           titlesData: FlTitlesData(
             rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -109,7 +122,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                   final point = data.dataPoints.firstWhere((p) => p.x == value, orElse: () => TimelinePoint(x: -1, y: 0, label: ''));
                   return Padding(
                     padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(point.label, style: const TextStyle(color: AppTheme.textMuted, fontSize: AppTypography.labelTiny)),
+                    child: Text(point.label, style: theme.textTheme.labelSmall),
                   );
                 },
               ),
@@ -120,21 +133,21 @@ class _TimelineScreenState extends State<TimelineScreen> {
             LineChartBarData(
               spots: data.dataPoints.map((p) => FlSpot(p.x, p.y)).toList(),
               isCurved: true,
-              color: AppTheme.primaryColor,
+              color: theme.colorScheme.primary,
               barWidth: 3,
               isStrokeCapRound: true,
               dotData: FlDotData(
                 show: true,
                 getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
                   radius: 4,
-                  color: Colors.white,
+                  color: theme.colorScheme.surface,
                   strokeWidth: 2,
-                  strokeColor: AppTheme.primaryColor,
+                  strokeColor: theme.colorScheme.primary,
                 ),
               ),
               belowBarData: BarAreaData(
                 show: true,
-                color: AppTheme.primaryColor.withOpacity(0.1),
+                color: theme.colorScheme.primary.withOpacity(0.1),
               ),
             ),
           ],
@@ -143,39 +156,46 @@ class _TimelineScreenState extends State<TimelineScreen> {
     );
   }
 
-  Widget _buildHistoryItem(String date, String title, String subtitle, bool isPositive) {
+  Widget _buildHistoryItem(BuildContext context, String date, String title, String subtitle, bool isPositive) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: AppConstants.paddingM),
+      padding: AppConstants.cardPadding,
       decoration: BoxDecoration(
-        color: AppTheme.backgroundColor,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppTheme.borderColor),
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
+        border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(color: AppTheme.surfaceColor, borderRadius: BorderRadius.circular(6)),
-            child: const Icon(Icons.insert_drive_file_outlined, color: AppTheme.primaryColor),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.primary.withOpacity(0.1), 
+              borderRadius: BorderRadius.circular(AppConstants.radiusSmall)
+            ),
+            child: Icon(Icons.insert_drive_file_outlined, color: theme.colorScheme.primary),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: AppConstants.paddingL),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: AppTypography.bodyLarge)),
-                const SizedBox(height: 4),
-                Text(date, style: const TextStyle(color: AppTheme.textMuted, fontSize: AppTypography.labelTiny)),
+                Text(title, style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)),
+                const SizedBox(height: AppConstants.paddingXS),
+                Text(date, style: theme.textTheme.labelSmall),
               ],
             ),
           ),
           Text(
             subtitle,
-            style: TextStyle(
-              fontSize: AppTypography.labelTiny,
+            style: theme.textTheme.labelSmall?.copyWith(
               fontWeight: FontWeight.w600,
-              color: isPositive ? Colors.green.shade700 : Colors.orange.shade700,
+              color: isPositive 
+                  ? (isDark ? Colors.green.shade400 : Colors.green.shade700) 
+                  : (isDark ? Colors.orange.shade400 : Colors.orange.shade700),
             ),
           ),
         ],

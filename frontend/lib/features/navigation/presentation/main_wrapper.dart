@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../core/theme/app_theme.dart';
 import '../../../core/constants/app_constants.dart';
 
 class MainWrapper extends StatefulWidget {
@@ -32,33 +31,36 @@ class _MainWrapperState extends State<MainWrapper> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); 
+
     return Scaffold(
       body: widget.child,
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push('/upload'),
-        backgroundColor: AppTheme.primaryColor,
+        backgroundColor: theme.colorScheme.primary,
         shape: const CircleBorder(),
         elevation: 4,
-        child: const Icon(Icons.add, color: Colors.white, size: 30),
+        child: Icon(Icons.add, color: theme.colorScheme.onPrimary, size: 30),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 8.0,
-        color: AppTheme.backgroundColor,
+        // CRITICAL FIX: This uses white in Light Mode, and dark slate in Dark Mode!
+        color: theme.colorScheme.surface, 
         child: SizedBox(
           height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildNavIcon(context, icon: Icons.grid_view_rounded, index: 0),
-              _buildNavIcon(context, icon: Icons.auto_graph_rounded, index: 1),
+              _buildNavIcon(context, icon: Icons.grid_view_rounded, index: 0, theme: theme),
+              _buildNavIcon(context, icon: Icons.auto_graph_rounded, index: 1, theme: theme),
               
               const SizedBox(width: 30),
               
-              _buildNavIcon(context, icon: Icons.person_outline_rounded, index: 2),
-              _buildNavIcon(context, icon: Icons.settings_outlined, index: 3),
+              _buildNavIcon(context, icon: Icons.person_outline_rounded, index: 2, theme: theme),
+              _buildNavIcon(context, icon: Icons.settings_outlined, index: 3, theme: theme),
             ],
           ),
         ),
@@ -66,13 +68,13 @@ class _MainWrapperState extends State<MainWrapper> {
     );
   }
 
-  Widget _buildNavIcon(BuildContext context, {required IconData icon, required int index}) {
+  Widget _buildNavIcon(BuildContext context, {required IconData icon, required int index, required ThemeData theme}) {
     final isSelected = _getSelectedIndex(context) == index;
     return IconButton(
       onPressed: () => _onItemTapped(index, context),
       icon: Icon(
         icon,
-        color: isSelected ? AppTheme.primaryColor : AppTheme.textMuted,
+        color: isSelected ? theme.colorScheme.primary : theme.colorScheme.onSurface.withOpacity(0.5),
         size: 26,
       ),
     );

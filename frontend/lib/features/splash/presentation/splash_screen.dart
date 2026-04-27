@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../core/theme/app_theme.dart';
+import '../../../core/theme/app_theme.dart'; 
 import '../../../core/constants/app_constants.dart';
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,18 +27,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.primaryColor,
+      backgroundColor: AppTheme.primaryColor, 
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(Icons.medical_services_outlined, size: 80, color: Colors.white),
-            SizedBox(height: 24),
+          children: [
+            const Icon(Icons.medical_services_outlined, size: 80, color: Colors.white),
+            const SizedBox(height: AppConstants.paddingXL),
             Text(
               AppConstants.appName,
-              style: TextStyle(
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 color: Colors.white,
-                fontSize: AppTypography.headingMedium,
                 fontWeight: FontWeight.bold,
                 letterSpacing: -1,
               ),
