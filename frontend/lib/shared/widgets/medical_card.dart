@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_theme.dart';
 import '../../core/constants/app_constants.dart';
 
 enum MedicalCardVariant { primary, quick, trend, progress }
@@ -23,7 +22,6 @@ class MedicalCard extends StatelessWidget {
     this.progress,
     this.trailingText,
   });
-
 
   factory MedicalCard.primary({
     required String title,
@@ -78,17 +76,29 @@ class MedicalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final bool isPrimary = variant == MedicalCardVariant.primary;
-    final Color bgColor = isPrimary ? AppTheme.primaryColor : (variant == MedicalCardVariant.progress ? AppTheme.surfaceColor : AppTheme.backgroundColor);
-    final Color contentColor = isPrimary ? Colors.white : AppTheme.textPrimary;
-    final Border? border = isPrimary ? null : Border.all(color: AppTheme.borderColor);
+    
+    final Color bgColor = isPrimary 
+        ? theme.colorScheme.primary 
+        : theme.colorScheme.surface; 
+        
+    final Color contentColor = isPrimary 
+        ? theme.colorScheme.onPrimary 
+        : theme.colorScheme.onSurface;
+        
+    final Border? border = isPrimary 
+        ? null 
+        : Border.all(color: theme.dividerColor.withOpacity(0.1));
 
     return Container(
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
         border: border,
-        boxShadow: isPrimary ? [BoxShadow(color: AppTheme.primaryColor.withOpacity(0.2), blurRadius: 10, offset: const Offset(0, 4))] : null,
+        boxShadow: isPrimary 
+            ? [BoxShadow(color: theme.colorScheme.primary.withOpacity(0.2), blurRadius: 10, offset: const Offset(0, 4))] 
+            : null,
       ),
       child: Material(
         color: Colors.transparent,
@@ -97,14 +107,14 @@ class MedicalCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
           child: Padding(
             padding: AppConstants.cardPadding,
-            child: _buildContent(contentColor),
+            child: _buildContent(context, contentColor, theme), 
           ),
         ),
       ),
     );
   }
 
-  Widget _buildContent(Color color) {
+  Widget _buildContent(BuildContext context, Color color, ThemeData theme) {
     switch (variant) {
       case MedicalCardVariant.primary:
         return Row(
@@ -113,8 +123,9 @@ class MedicalCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: TextStyle(color: color, fontSize: 18, fontWeight: FontWeight.bold)),
-                  if (subtitle != null) Text(subtitle!, style: TextStyle(color: color.withOpacity(0.8), fontSize: 14)),
+                  Text(title, style: theme.textTheme.titleLarge?.copyWith(color: color, fontWeight: FontWeight.bold)),
+                  if (subtitle != null) 
+                    Text(subtitle!, style: theme.textTheme.bodyMedium?.copyWith(color: color.withOpacity(0.8))),
                 ],
               ),
             ),
@@ -127,8 +138,8 @@ class MedicalCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, color: color, size: 24),
-            const SizedBox(height: 8),
-            Text(title, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
+            const SizedBox(height: AppConstants.paddingS),
+            Text(title, style: theme.textTheme.titleMedium?.copyWith(color: color, fontSize: 13)), // Using adaptive color
           ],
         );
 
@@ -137,20 +148,24 @@ class MedicalCard extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(color: Colors.teal.shade50, borderRadius: BorderRadius.circular(AppConstants.radiusSmall)),
-              child: Icon(icon, color: Colors.teal),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primary.withOpacity(0.1), 
+                borderRadius: BorderRadius.circular(AppConstants.radiusSmall)
+              ),
+              child: Icon(icon, color: theme.colorScheme.primary),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: AppConstants.paddingL),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-                  if (subtitle != null) Text(subtitle!, style: const TextStyle(color: AppTheme.textMuted, fontSize: 12)),
+                  Text(title, style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)),
+                  if (subtitle != null) 
+                    Text(subtitle!, style: theme.textTheme.labelSmall), 
                 ],
               ),
             ),
-            const Icon(Icons.keyboard_arrow_right, color: AppTheme.textMuted),
+            Icon(Icons.keyboard_arrow_right, color: theme.colorScheme.onSurface.withOpacity(0.5)),
           ],
         );
 
@@ -160,15 +175,16 @@ class MedicalCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-                if (trailingText != null) Text(trailingText!, style: const TextStyle(color: AppTheme.primaryColor, fontWeight: FontWeight.w600, fontSize: 12)),
+                Text(title, style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)),
+                if (trailingText != null) 
+                  Text(trailingText!, style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.bold)),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppConstants.paddingM),
             LinearProgressIndicator(
               value: progress ?? 0,
-              backgroundColor: AppTheme.borderColor,
-              color: AppTheme.primaryColor,
+              backgroundColor: theme.colorScheme.onSurface.withOpacity(0.1),
+              color: theme.colorScheme.primary,
               minHeight: 6,
               borderRadius: BorderRadius.circular(AppConstants.radiusExtraSmall),
             ),
