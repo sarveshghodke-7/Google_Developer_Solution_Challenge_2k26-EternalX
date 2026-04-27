@@ -12,6 +12,11 @@ import '../features/campaigns/presentation/campaigns_screen.dart';
 import '../features/campaigns/data/campaign_model.dart';
 import '../features/timeline/presentation/timeline_screen.dart';
 import '../features/timeline/data/timeline_model.dart';
+import '../features/navigation/presentation/main_wrapper.dart';
+import '../features/profile/presentation/profile_screen.dart';
+import '../features/settings/presentation/settings_screen.dart';
+import '../features/profile/presentation/profile_screen.dart';
+import '../features/settings/presentation/settings_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/', 
@@ -34,6 +39,12 @@ final GoRouter appRouter = GoRouter(
         return const RegisterScreen();
       },
     ),
+    ShellRoute(
+      builder: (context, state, child) {
+        // This 'child' is the HomeScreen, TimelineScreen, etc.
+        return MainWrapper(child: child); 
+      },
+      routes: [
     GoRoute(
       path: '/home',
       builder: (BuildContext context, GoRouterState state) {
@@ -140,6 +151,21 @@ final GoRouter appRouter = GoRouter(
 
         return TimelineScreen(metricsData: metricsData);
       },
+      ),
+      GoRoute(
+        path: '/settings',
+        builder: (BuildContext context, GoRouterState state) {
+        return const SettingsScreen();
+      },
+    ),
+GoRoute(
+        path: '/profile',
+        builder: (BuildContext context, GoRouterState state) {
+        return const ProfileScreen();
+      },
+    ),
+
+    ],
     ),
   ],
 );
