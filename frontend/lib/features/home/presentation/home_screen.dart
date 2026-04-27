@@ -99,9 +99,9 @@ class HomeScreen extends StatelessWidget {
                 mainAxisSpacing: AppConstants.paddingL,
                 childAspectRatio: 1.5,
                 children: [
-                  MedicalCard.quick(title: 'Meds', icon: Icons.medication_outlined, onTap: () {}),
-                  MedicalCard.quick(title: 'Visits', icon: Icons.calendar_month_outlined, onTap: () {}),
-                  MedicalCard.quick(title: 'Support', icon: Icons.chat_bubble_outline, onTap: () {}),
+                  MedicalCard.quick(title: 'Meds', icon: Icons.medication_outlined, onTap: () => context.push('/medications')),
+                  MedicalCard.quick(title: 'Visits', icon: Icons.calendar_month_outlined, onTap: () => context.push('/visits')),
+                  MedicalCard.quick(title: 'Support', icon: Icons.chat_bubble_outline, onTap: () => context.push('/support')),
                   MedicalCard.quick(title: 'Settings', icon: Icons.settings_outlined, onTap: () => context.push('/settings')), // Wired up settings!
                 ],
             ),          

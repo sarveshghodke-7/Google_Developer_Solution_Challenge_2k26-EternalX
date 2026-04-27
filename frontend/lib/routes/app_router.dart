@@ -17,6 +17,10 @@ import '../features/profile/presentation/profile_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
+import '../features/medications/presentation/medications_screen.dart';
+import '../features/visits/presentation/visits_screen.dart';
+import '../features/support/presentation/support_screen.dart';
+
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/', 
@@ -39,9 +43,20 @@ final GoRouter appRouter = GoRouter(
         return const RegisterScreen();
       },
     ),
+    GoRoute(
+      path: '/medications',
+      builder: (context, state) => const MedicationsScreen(),
+    ),
+    GoRoute(
+      path: '/visits',
+      builder: (context, state) => const VisitsScreen(),
+    ),
+    GoRoute(
+      path: '/support',
+      builder: (context, state) => const SupportScreen(),
+    ),
     ShellRoute(
       builder: (context, state, child) {
-        // This 'child' is the HomeScreen, TimelineScreen, etc.
         return MainWrapper(child: child); 
       },
       routes: [
@@ -158,7 +173,7 @@ final GoRouter appRouter = GoRouter(
         return const SettingsScreen();
       },
     ),
-GoRoute(
+    GoRoute(
         path: '/profile',
         builder: (BuildContext context, GoRouterState state) {
         return const ProfileScreen();
