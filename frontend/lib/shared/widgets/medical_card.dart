@@ -96,7 +96,7 @@ class MedicalCard extends StatelessWidget {
           onTap: onTap,
           borderRadius: BorderRadius.circular(AppConstants.radiusMedium),
           child: Padding(
-            padding: const EdgeInsets.all(AppConstants.defaultPadding),
+            padding: AppConstants.cardPadding,
             child: _buildContent(contentColor),
           ),
         ),

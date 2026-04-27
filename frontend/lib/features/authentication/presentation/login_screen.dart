@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/input.dart';
 import '../../../shared/widgets/button.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/constants/app_constants.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -22,12 +23,12 @@ class LoginScreen extends StatelessWidget {
               const Text('Enter your details to access your portal.'),
               const SizedBox(height: 32),
               
-              const Text('Email', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14)),
+              const Text('Email', style: TextStyle(fontWeight: FontWeight.w500, fontSize: AppTypography.bodyMedium)),
               const SizedBox(height: 8),
               const ShadcnInput(hintText: 'm.scott@example.com'),
               const SizedBox(height: 16),
               
-              const Text('Password', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14)),
+              const Text('Password', style: TextStyle(fontWeight: FontWeight.w500, fontSize: AppTypography.bodyMedium)),
               const SizedBox(height: 8),
               const ShadcnInput(hintText: '••••••••', isPassword: true),
               const SizedBox(height: 32),

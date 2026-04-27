@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/widgets/button.dart';
 import '../../../core/utils/file_storage_service.dart'; 
+import '../../../core/constants/app_constants.dart';
 import 'package:go_router/go_router.dart';
 
 class UploadScreen extends StatefulWidget {
@@ -77,12 +78,12 @@ class _UploadScreenState extends State<UploadScreen> {
                       const SizedBox(height: 16),
                       Text(
                         _selectedReport != null ? 'File Selected' : 'Tap to browse files',
-                        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: AppTypography.bodyLarge),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         fileName ?? 'Supports PDF, JPG, or PNG',
-                        style: const TextStyle(color: AppTheme.textMuted, fontSize: 14),
+                        style: const TextStyle(color: AppTheme.textMuted, fontSize: AppTypography.bodyMedium),
                       ),
                     ],
                   ],

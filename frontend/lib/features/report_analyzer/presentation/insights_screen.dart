@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/widgets/button.dart';
 import '../data/report_insight_model.dart';
+import '../../../core/constants/app_constants.dart';
 
 class InsightsScreen extends StatelessWidget {
   final ReportInsightModel insightData; 
@@ -24,7 +25,7 @@ class InsightsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(insightData.reportTitle, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            Text(insightData.reportTitle, style: const TextStyle(fontSize: AppTypography.titleLarge, fontWeight: FontWeight.bold)),
             const SizedBox(height: 4),
             Text('Analyzed on ${insightData.date}', style: const TextStyle(color: AppTheme.textMuted)),
             const SizedBox(height: 24),
@@ -43,12 +44,12 @@ class InsightsScreen extends StatelessWidget {
               const SizedBox(height: 8),
             ],
 
-            const Text('What it means', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('What it means', style: TextStyle(fontSize: AppTypography.titleMedium, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             _buildInfoCard(insightData.explanation),
             const SizedBox(height: 24),
 
-            const Text('Action Plan', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Action Plan', style: TextStyle(fontSize: AppTypography.titleMedium, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             ...insightData.actions.map((action) => Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
@@ -88,7 +89,7 @@ class InsightsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(title, style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: AppTypography.bodyLarge)),
                 const SizedBox(height: 4),
                 Text(message, style: TextStyle(color: AppTheme.textPrimary, height: 1.4)),
               ],
@@ -107,7 +108,7 @@ class InsightsScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppTheme.borderColor),
       ),
-      child: Text(text, style: const TextStyle(height: 1.5, fontSize: 15)),
+      child: Text(text, style: const TextStyle(height: 1.5, fontSize: AppTypography.bodyMedium)),
     );
   }
 
@@ -128,7 +129,7 @@ class InsightsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: AppTypography.bodyMedium)),
                 const SizedBox(height: 4),
                 Text(description, style: const TextStyle(color: AppTheme.textMuted, height: 1.4)),
               ],

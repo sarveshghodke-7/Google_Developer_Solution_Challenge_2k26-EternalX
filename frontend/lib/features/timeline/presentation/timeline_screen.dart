@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../data/timeline_model.dart'; 
+import '../../../core/constants/app_constants.dart';
 
 class TimelineScreen extends StatefulWidget {
   final Map<String, TimelineModel> metricsData;
@@ -28,10 +29,6 @@ class _TimelineScreenState extends State<TimelineScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, size: 18),
-          onPressed: () => context.pop(),
-        ),
         title: const Text('Health Timeline', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: SingleChildScrollView(
@@ -39,7 +36,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Your Health Trends', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            const Text('Your Health Trends', style: TextStyle(fontSize: AppTypography.titleLarge, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             Text('Track how your $selectedMetric is changing over time.', 
               style: const TextStyle(color: AppTheme.textMuted)),
@@ -71,7 +68,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
             _buildDynamicChart(currentData),
             
             const SizedBox(height: 32),
-            const Text('Past Reports', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Past Reports', style: TextStyle(fontSize: AppTypography.titleMedium, fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
             ...currentData.history.map((report) => _buildHistoryItem(
               report.date, 
@@ -112,7 +109,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                   final point = data.dataPoints.firstWhere((p) => p.x == value, orElse: () => TimelinePoint(x: -1, y: 0, label: ''));
                   return Padding(
                     padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(point.label, style: const TextStyle(color: AppTheme.textMuted, fontSize: 12)),
+                    child: Text(point.label, style: const TextStyle(color: AppTheme.textMuted, fontSize: AppTypography.labelTiny)),
                   );
                 },
               ),
@@ -167,16 +164,16 @@ class _TimelineScreenState extends State<TimelineScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: AppTypography.bodyLarge)),
                 const SizedBox(height: 4),
-                Text(date, style: const TextStyle(color: AppTheme.textMuted, fontSize: 12)),
+                Text(date, style: const TextStyle(color: AppTheme.textMuted, fontSize: AppTypography.labelTiny)),
               ],
             ),
           ),
           Text(
             subtitle,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: AppTypography.labelTiny,
               fontWeight: FontWeight.w600,
               color: isPositive ? Colors.green.shade700 : Colors.orange.shade700,
             ),

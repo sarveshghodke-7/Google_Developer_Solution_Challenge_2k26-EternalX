@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             const Text(
               'Good morning,\nMiss Sarvesh',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, height: 1.1, letterSpacing: -0.5),
+              style: TextStyle(fontSize: AppTypography.headingMedium, fontWeight: FontWeight.bold, height: 1.1, letterSpacing: -0.5),
             ),
             const SizedBox(height: 24),
             MedicalCard.primary(
@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Health Trends', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const Text('Health Trends', style: TextStyle(fontSize: AppTypography.titleMedium, fontWeight: FontWeight.bold)),
                 TextButton(
                   onPressed: () => context.push('/timeline'),
                   child: const Text('See All'),
@@ -62,7 +62,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 32),
 
-            const Text('Current Challenge', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Current Challenge', style: TextStyle(fontSize: AppTypography.titleMedium, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             MedicalCard.progress(
                 title: '7-Day No Sugar',
@@ -73,7 +73,7 @@ class HomeScreen extends StatelessWidget {
            
             const SizedBox(height: 32),
             
-            const Text('Quick Access', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Quick Access', style: TextStyle(fontSize: AppTypography.titleMedium, fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
             GridView.count(
                 shrinkWrap: true,

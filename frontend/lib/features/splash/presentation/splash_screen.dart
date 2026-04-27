@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
               AppConstants.appName,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 32,
+                fontSize: AppTypography.headingMedium,
                 fontWeight: FontWeight.bold,
                 letterSpacing: -1,
               ),

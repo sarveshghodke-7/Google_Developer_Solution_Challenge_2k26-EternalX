@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../shared/widgets/button.dart';
 import '../data/campaign_model.dart';
+import '../../../core/constants/app_constants.dart';
 
 class CampaignsScreen extends StatelessWidget {
   final List<CampaignModel> campaigns;
@@ -27,7 +28,7 @@ class CampaignsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Your Active Challenges', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Your Active Challenges', style: TextStyle(fontSize: AppTypography.titleLarge, fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
             if (activeCampaigns.isEmpty)
               const Text('No active challenges. Pick one below!', style: TextStyle(color: AppTheme.textMuted))
@@ -36,9 +37,9 @@ class CampaignsScreen extends StatelessWidget {
               
             const SizedBox(height: 40),
             
-            const Text('Recommended For You', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Recommended For You', style: TextStyle(fontSize: AppTypography.titleMedium, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            const Text('Based on your latest lipid panel results.', style: TextStyle(color: AppTheme.textMuted, fontSize: 14)),
+            const Text('Based on your latest lipid panel results.', style: TextStyle(color: AppTheme.textMuted, fontSize: AppTypography.bodyMedium)),
             const SizedBox(height: 16),
             ...recommendedCampaigns.map((c) => _buildRecommendedCampaignCard(c)),
           ],
@@ -64,7 +65,7 @@ class CampaignsScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(campaign.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              Text(campaign.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: AppTypography.bodyLarge)),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
@@ -72,7 +73,7 @@ class CampaignsScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text('Day ${campaign.daysCompleted} of ${campaign.daysTotal}', 
-                  style: const TextStyle(color: AppTheme.primaryColor, fontSize: 12, fontWeight: FontWeight.bold)),
+                  style: const TextStyle(color: AppTheme.primaryColor, fontSize: AppTypography.labelTiny, fontWeight: FontWeight.bold)),
               ),
             ],
           ),
@@ -107,7 +108,7 @@ class CampaignsScreen extends StatelessWidget {
             children: [
               const Icon(Icons.stars_rounded, color: Colors.amber, size: 20),
               const SizedBox(width: 8),
-              Text(campaign.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              Text(campaign.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: AppTypography.bodyLarge)),
             ],
           ),
           const SizedBox(height: 8),

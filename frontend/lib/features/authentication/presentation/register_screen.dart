@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/input.dart';
 import '../../../shared/widgets/button.dart';
+import '../../../core/constants/app_constants.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -26,17 +27,17 @@ class RegisterScreen extends StatelessWidget {
               const Text('Register to manage your healthcare.'),
               const SizedBox(height: 32),
               
-              const Text('Full Name', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14)),
+              const Text('Full Name', style: TextStyle(fontWeight: FontWeight.w500, fontSize: AppTypography.bodyMedium)),
               const SizedBox(height: 8),
-              const ShadcnInput(hintText: 'John Doe'),
+              const ShadcnInput(hintText: 'Raju Rastogi'),
               const SizedBox(height: 16),
 
-              const Text('Email', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14)),
+              const Text('Email', style: TextStyle(fontWeight: FontWeight.w500, fontSize: AppTypography.bodyMedium)),
               const SizedBox(height: 8),
-              const ShadcnInput(hintText: 'name@example.com'),
+              const ShadcnInput(hintText: 'rajurastojixxx@gmail.com'),
               const SizedBox(height: 16),
               
-              const Text('Password', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14)),
+              const Text('Password', style: TextStyle(fontWeight: FontWeight.w500, fontSize: AppTypography.bodyMedium)),
               const SizedBox(height: 8),
               const ShadcnInput(hintText: '••••••••', isPassword: true),
               const SizedBox(height: 32),
