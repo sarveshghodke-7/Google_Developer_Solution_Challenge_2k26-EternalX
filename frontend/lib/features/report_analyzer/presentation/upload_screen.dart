@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 import '../../../shared/widgets/button.dart';
 import '../../../core/utils/file_storage_service.dart'; 
 import '../../../core/constants/app_constants.dart';
+import '../../../core/network/api_service.dart'; 
+import '../data/report_insight_model.dart';
+import '../../../core/utils/local_storage_service.dart';
 
 class UploadScreen extends StatefulWidget {
   const UploadScreen({super.key});
@@ -16,6 +19,30 @@ class _UploadScreenState extends State<UploadScreen> {
   final FileStorageService _fileStorageService = FileStorageService();
   File? _selectedReport;
   bool _isLoading = false;
+  bool _isAnalyzing = false;
+  
+  Future<void> _processReport() async {
+    if (_selectedReport == null) return;
+
+    setState(() => _isAnalyzing = true);
+    try {
+      final ReportInsightModel result = await ApiService().analyzeReport(_selectedReport!);
+      await LocalStorageService().saveLatestReport(result);
+      if (mounted) {
+        context.push('/insights', extra: result);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString()), backgroundColor: Colors.red),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isAnalyzing = false);
+      }
+    }
+  }
 
   Future<void> _handleFileSelection() async {
     setState(() => _isLoading = true);
@@ -53,7 +80,7 @@ class _UploadScreenState extends State<UploadScreen> {
             const SizedBox(height: AppConstants.paddingXL),
             
             GestureDetector(
-              onTap: _isLoading ? null : _handleFileSelection,
+              onTap: _isLoading || _isAnalyzing ? null : _handleFileSelection, // Disable while analyzing
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(vertical: 48),
@@ -96,15 +123,12 @@ class _UploadScreenState extends State<UploadScreen> {
             ),
             
             const Spacer(),
-            
-            ShadcnButton(
-              text: 'Analyze Report',
-              onPressed: _selectedReport != null 
-                  ? () {
-                      context.push('/insights');
-                    }
-                  : () {}, 
-            ),
+            _isAnalyzing
+              ? const Center(child: CircularProgressIndicator())
+              : ShadcnButton(
+                  text: 'Analyze Report',
+                  onPressed: _selectedReport != null ? _processReport : () {}, 
+                ),
           ],
         ),
       ),

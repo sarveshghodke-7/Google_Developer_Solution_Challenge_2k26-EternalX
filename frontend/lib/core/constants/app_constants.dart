@@ -5,7 +5,7 @@ class AppConstants {
   static const String appVersion = "1.2.0";
 
   // API
-  static const String apiBaseUrl = "https://your-api-endpoint.com/v1";
+  static const String apiBaseUrl = "http://127.0.0.1:5001/healthlens-5fc36/us-central1/api";
   static const String geminiModel = "gemini-1.5-pro"; 
   static const int uploadSizeLimitBytes = 5 * 1024 * 1024; // 5MB 
   static const int cacheDurationHours = 24; 

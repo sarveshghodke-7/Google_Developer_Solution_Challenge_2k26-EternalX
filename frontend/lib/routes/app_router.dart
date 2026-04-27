@@ -58,29 +58,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/insights',
       builder: (BuildContext context, GoRouterState state) {
-        final dummyApiJson = {
-          "reportTitle": "Lipid Panel Blood Test",
-          "date": "April 27, 2026",
-          "explanation": "Cholesterol is a waxy substance in your blood. While your body needs it to build cells, having too much LDL (bad) cholesterol can cause buildup in your arteries...",
-          "alerts": [
-            {
-              "title": "Attention Needed",
-              "message": "Your LDL Cholesterol is elevated at 160 mg/dL.",
-              "isWarning": true
-            }
-          ],
-          "actions": [
-            {
-              "title": "Dietary Changes",
-              "description": "Reduce saturated fats and eliminate trans fats."
-            },
-            {
-              "title": "Exercise",
-              "description": "Aim for 30 minutes of moderate exercise 5 times a week."
-            }
-          ]
-        };
-        final data = ReportInsightModel.fromJson(dummyApiJson);
+        final data = state.extra as ReportInsightModel;
 
         return InsightsScreen(insightData: data);
       },
