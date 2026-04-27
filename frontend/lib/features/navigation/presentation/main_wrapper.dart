@@ -34,8 +34,6 @@ class _MainWrapperState extends State<MainWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: widget.child,
-      
-      // The "+" Button in the Middle
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push('/upload'),
         backgroundColor: AppTheme.primaryColor,
@@ -57,7 +55,7 @@ class _MainWrapperState extends State<MainWrapper> {
               _buildNavIcon(context, icon: Icons.grid_view_rounded, index: 0),
               _buildNavIcon(context, icon: Icons.auto_graph_rounded, index: 1),
               
-              const SizedBox(width: 40),
+              const SizedBox(width: 30),
               
               _buildNavIcon(context, icon: Icons.person_outline_rounded, index: 2),
               _buildNavIcon(context, icon: Icons.settings_outlined, index: 3),

@@ -26,7 +26,13 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.only(
+          left: AppConstants.paddingXL, 
+          right: AppConstants.paddingXL, 
+          top: AppConstants.paddingXL, 
+          bottom: 20.0,
+        ),
+        // padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants/app_constants.dart'; 
 
 class AppTheme {
   AppTheme._();
@@ -29,10 +30,16 @@ class AppTheme {
         centerTitle: false,
         scrolledUnderElevation: 0, 
       ),
+      
       textTheme: const TextTheme(
-        headlineMedium: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: 28),
-        bodyLarge: TextStyle(color: textPrimary, fontSize: 16),
-        bodyMedium: TextStyle(color: textMuted, fontSize: 14),
+        displayLarge: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: AppTypography.metricDisplay),
+        headlineLarge: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: AppTypography.headingLarge, letterSpacing: -0.5),
+        headlineMedium: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: AppTypography.headingMedium),
+        titleLarge: TextStyle(color: textPrimary, fontWeight: FontWeight.w600, fontSize: AppTypography.titleLarge),
+        titleMedium: TextStyle(color: textPrimary, fontWeight: FontWeight.w600, fontSize: AppTypography.titleMedium),
+        bodyLarge: TextStyle(color: textPrimary, fontSize: AppTypography.bodyLarge),
+        bodyMedium: TextStyle(color: textMuted, fontSize: AppTypography.bodyMedium, height: 1.5),
+        labelSmall: TextStyle(color: textMuted, fontSize: AppTypography.labelTiny, letterSpacing: 0.5),
       ),
     );
   }
