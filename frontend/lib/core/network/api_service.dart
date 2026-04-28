@@ -81,4 +81,20 @@ class ApiService {
       throw Exception('Network error: $e');
     }
   }
+
+  // DOCTOR VISITS 
+  Future<List<dynamic>> fetchVisits(String userId) async {
+    final response = await http.get(Uri.parse('${AppConstants.apiBaseUrl}/visits/list/$userId'));
+    if (response.statusCode == 200) return jsonDecode(response.body);
+    throw Exception('Failed to load visits');
+  }
+
+  Future<void> addVisit(Map<String, dynamic> visitData) async {
+    final response = await http.post(
+      Uri.parse('${AppConstants.apiBaseUrl}/visits/add'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(visitData),
+    );
+    if (response.statusCode != 200) throw Exception('Failed to add visit');
+  }
 }
