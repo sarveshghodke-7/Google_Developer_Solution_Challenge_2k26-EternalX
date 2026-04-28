@@ -1,4 +1,5 @@
 class CampaignModel {
+  final String? id;
   final String title;
   final String description;
   final int daysTotal;
@@ -7,6 +8,7 @@ class CampaignModel {
   final String category;
 
   CampaignModel({
+    this.id,
     required this.title,
     required this.description,
     required this.daysTotal,
@@ -17,6 +19,7 @@ class CampaignModel {
 
   factory CampaignModel.fromJson(Map<String, dynamic> json) {
     return CampaignModel(
+      id: json['id'],
       title: json['title'] ?? '',
       description: json['description'] ?? '',
       daysTotal: json['daysTotal'] ?? 7,

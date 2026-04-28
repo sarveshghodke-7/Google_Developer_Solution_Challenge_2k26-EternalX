@@ -4,6 +4,7 @@ class ToonParser {
       'alerts': [],
       'parameters': [],
       'recommendations': [],
+      'trends': [],
     };
 
     final blockRegex = RegExp(r'<([A-Z]+)>([\s\S]*?)<\/\1>');
@@ -34,6 +35,8 @@ class ToonParser {
           if (itemMap.containsKey('text')) {
             result['recommendations'].add(itemMap['text']);
           }
+        } else if (tag == 'TRENDS') {
+          result['trends'].add(itemMap);
         }
       }
     }

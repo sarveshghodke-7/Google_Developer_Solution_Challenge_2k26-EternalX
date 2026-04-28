@@ -5,12 +5,14 @@ class ShadcnInput extends StatelessWidget {
   final String hintText;
   final bool isPassword;
   final TextEditingController? controller;
+  final TextInputType? keyboardType;
 
   const ShadcnInput({
     super.key,
     required this.hintText,
     this.isPassword = false,
     this.controller,
+    this.keyboardType,
   });
 
   @override
@@ -20,6 +22,7 @@ class ShadcnInput extends StatelessWidget {
     return TextField(
       controller: controller,
       obscureText: isPassword,
+      keyboardType: keyboardType,
       style: theme.textTheme.bodyLarge, 
       decoration: InputDecoration(
         hintText: hintText,

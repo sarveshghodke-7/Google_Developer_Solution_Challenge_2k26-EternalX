@@ -4,8 +4,9 @@ import '../../../core/constants/app_constants.dart';
 import '../../../shared/widgets/button.dart';
 import '../../../shared/widgets/input.dart';
 import '../../../core/network/api_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-const String currentUserId = 'user_123'; 
+String get currentUserId => FirebaseAuth.instance.currentUser?.uid ?? '';
 final ValueNotifier<int> refreshMedsNotifier = ValueNotifier(0);
 
 class MedicationsScreen extends StatefulWidget {

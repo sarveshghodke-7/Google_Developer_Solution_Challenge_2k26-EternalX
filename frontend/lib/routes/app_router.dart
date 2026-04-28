@@ -9,12 +9,9 @@ import '../features/report_analyzer/presentation/upload_screen.dart';
 import '../features/report_analyzer/presentation/insights_screen.dart';
 import '../features/report_analyzer/data/report_insight_model.dart';
 import '../features/campaigns/presentation/campaigns_screen.dart';
-import '../features/campaigns/data/campaign_model.dart';
 import '../features/timeline/presentation/timeline_screen.dart';
 import '../features/timeline/data/timeline_model.dart';
 import '../features/navigation/presentation/main_wrapper.dart';
-import '../features/profile/presentation/profile_screen.dart';
-import '../features/settings/presentation/settings_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
 import '../features/medications/presentation/medications_screen.dart';
@@ -66,27 +63,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/campaigns',
       builder: (BuildContext context, GoRouterState state) {
-        final List<Map<String, dynamic>> mockApiData = [
-          {
-            "title": "7-Day No Sugar Challenge",
-            "description": "Cut out all processed sugars to help regulate your glucose levels.",
-            "daysTotal": 7,
-            "daysCompleted": 2,
-            "isActive": true,
-            "category": "Diet"
-          },
-          {
-            "title": "Daily Step Goal",
-            "description": "Walk 8,000 steps a day to improve cardiovascular health and lower LDL.",
-            "daysTotal": 30,
-            "daysCompleted": 0,
-            "isActive": false,
-            "category": "Exercise"
-          }
-        ];
-
-        final campaigns = mockApiData.map((json) => CampaignModel.fromJson(json)).toList();
-        return CampaignsScreen(campaigns: campaigns);
+        return const CampaignsScreen();
       },
     ),
     GoRoute(
