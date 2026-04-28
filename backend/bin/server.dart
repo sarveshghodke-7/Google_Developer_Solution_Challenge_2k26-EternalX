@@ -2,13 +2,13 @@ import 'dart:io';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
-import '../lib/core/firebase_setup.dart';
-import '../lib/core/auth_middleware.dart';
-import '../lib/controllers/report_controller.dart';
-import '../lib/controllers/medication_controller.dart';
-import '../lib/controllers/visit_controller.dart';
-import '../lib/controllers/trend_controller.dart';
-import '../lib/controllers/campaign_controller.dart';
+import 'package:backend/core/firebase_setup.dart';
+import 'package:backend/core/auth_middleware.dart';
+import 'package:backend/controllers/report_controller.dart';
+import 'package:backend/controllers/medication_controller.dart';
+import 'package:backend/controllers/visit_controller.dart';
+import 'package:backend/controllers/trend_controller.dart';
+import 'package:backend/controllers/campaign_controller.dart';
 
 void main(List<String> args) async {
   try {
@@ -47,5 +47,5 @@ void main(List<String> args) async {
   final port = int.parse(AppSetup.env['PORT'] ?? '8080'); 
   final server = await serve(handler, ip, port);
   
-  print('Dart Backend running at http://${server.address.host}:${server.port}');
+  stdout.writeln('Backend running at http://${server.address.address}:${server.port}');
 }
