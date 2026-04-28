@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class AppConstants {
   static const String appName = "MediCore";
-  static const String appVersion = "1.2.0";
+  static const String appVersion = "1.2.1";
 
   // API
-  static const String apiBaseUrl = "http://127.0.0.1:5001/healthlens-5fc36/us-central1/api";
+  // static const String apiBaseUrl = "http://127.0.0.1:5001/healthlens-5fc36/us-central1/api";
+  static const String apiBaseUrl = "http://127.0.0.1:8080";
   static const String geminiModel = "gemini-1.5-pro"; 
   static const int uploadSizeLimitBytes = 5 * 1024 * 1024; // 5MB 
   static const int cacheDurationHours = 24; 
