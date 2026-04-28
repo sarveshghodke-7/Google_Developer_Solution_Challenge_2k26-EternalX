@@ -2,11 +2,10 @@ import 'dart:io';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
-
-// Import your custom files
 import '../lib/core/firebase_setup.dart';
 import '../lib/controllers/report_controller.dart';
 import '../lib/controllers/medication_controller.dart';
+import '../lib/controllers/visit_controller.dart';
 
 void main(List<String> args) async {
   try {
@@ -18,10 +17,11 @@ void main(List<String> args) async {
 
   final reportController = ReportController(AppSetup.firestore);
   final medicationController = MedicationController(AppSetup.firestore);
-
+  final visitController = VisitController(AppSetup.firestore);
   final appRouter = Router()
-    ..mount('/', reportController.router)         // Mounts /analyze-report
-    ..mount('/meds', medicationController.router); // Mounts /meds/add, /meds/list
+    ..mount('/', reportController.router) 
+    ..mount('/meds', medicationController.router)
+    ..mount('/visits', visitController.router); 
 
   final handler = Pipeline()
       .addMiddleware(logRequests())
