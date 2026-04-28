@@ -39,13 +39,14 @@ gives you a concrete action plan. No medical background required.
 ---
 
 ## 📁 Repository Structure
+
+```
 Google_Developer_Solution_Challenge_2k26-EternalX/
 ├── frontend/        # Flutter mobile app
 ├── backend/         # Dart + Shelf API server
 ├── .gitignore
 └── README.md
-
----
+```
 
 ## 🚀 Quick Start
 
