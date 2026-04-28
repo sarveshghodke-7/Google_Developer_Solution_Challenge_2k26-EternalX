@@ -1,21 +1,16 @@
-# Use latest stable channel SDK.
-FROM dart:stable AS build
+FROM dart:stable
 
-# Resolve app dependencies.
 WORKDIR /app
+
+# Install dependencies
 COPY pubspec.* ./
 RUN dart pub get
 
-# Copy app source code (except anything in .dockerignore) and AOT compile app.
+# Copy full backend
 COPY . .
-RUN dart build cli --target bin/server.dart -o output
 
-# Build minimal serving image from AOT-compiled `/server`
-# and the pre-built AOT-runtime in the `/runtime/` directory of the base image.
-FROM scratch
-COPY --from=build /runtime/ /
-COPY --from=build /app/output/bundle/ /app/
-
-# Start server.
+# Expose port
 EXPOSE 8080
-CMD ["/app/bin/server"]
+
+# Run server
+CMD ["dart", "run", "bin/server.dart"]
