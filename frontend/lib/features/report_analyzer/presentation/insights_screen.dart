@@ -151,8 +151,9 @@ class InsightsScreen extends StatelessWidget {
 
 Widget _buildParameterItem(BuildContext context, dynamic param) {
     final theme = Theme.of(context);
-    final isAbnormal = param['status'] != 'normal';
+    final isAbnormal = param['status'] != 'normal' && param['status'] != null;
     final isHigh = param['status'] == 'high';
+    final String valueText = '${param['value'] ?? ''} ${param['unit'] ?? ''}'.trim();
 
     return Container(
       padding: AppConstants.cardPadding,
@@ -162,39 +163,45 @@ Widget _buildParameterItem(BuildContext context, dynamic param) {
         border: Border.all(color: theme.dividerColor.withOpacity(0.1)),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start, 
         children: [
           Expanded(
+            flex: 2,
             child: Text(
               param['name'] ?? '', 
               style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
-              softWrap: true, 
             ),
           ),
           
-          const SizedBox(width: AppConstants.paddingM), 
-          
-          Row(
-            mainAxisSize: MainAxisSize.min, 
-            children: [
-              Text(
-                '${param['value']} ${param['unit']}', 
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: isAbnormal ? (isHigh ? Colors.red : Colors.orange) : theme.colorScheme.onSurface,
-                  fontWeight: isAbnormal ? FontWeight.bold : FontWeight.normal,
+          const SizedBox(width: AppConstants.paddingM),
+          Expanded(
+            flex: 3, 
+            child: Wrap(
+              alignment: WrapAlignment.end, 
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Text(
+                  valueText, 
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: isAbnormal ? (isHigh ? Colors.red : Colors.orange) : theme.colorScheme.onSurface,
+                    fontWeight: isAbnormal ? FontWeight.bold : FontWeight.normal,
+                  ),
+                  textAlign: TextAlign.right, 
                 ),
-              ),
-              if (isAbnormal) ...[
-                const SizedBox(width: 8),
-                Icon(
-                  isHigh ? Icons.arrow_upward : Icons.arrow_downward, 
-                  color: isHigh ? Colors.red : Colors.orange, 
-                  size: 16
-                ),
-              ]
-            ],
+                if (isAbnormal) ...[
+                  const SizedBox(width: 4),
+                  Icon(
+                    isHigh ? Icons.arrow_upward : Icons.arrow_downward, 
+                    color: isHigh ? Colors.red : Colors.orange, 
+                    size: 16
+                  ),
+                ]
+              ],
+            ),
           ),
+
         ],
       ),
     );
-  }}
+  }
+}
