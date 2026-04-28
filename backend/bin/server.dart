@@ -6,6 +6,7 @@ import '../lib/core/firebase_setup.dart';
 import '../lib/controllers/report_controller.dart';
 import '../lib/controllers/medication_controller.dart';
 import '../lib/controllers/visit_controller.dart';
+import '../lib/controllers/trend_controller.dart';
 
 void main(List<String> args) async {
   try {
@@ -18,10 +19,12 @@ void main(List<String> args) async {
   final reportController = ReportController(AppSetup.firestore);
   final medicationController = MedicationController(AppSetup.firestore);
   final visitController = VisitController(AppSetup.firestore);
+  final trendController = TrendController(AppSetup.firestore);
   final appRouter = Router()
     ..mount('/', reportController.router) 
     ..mount('/meds', medicationController.router)
-    ..mount('/visits', visitController.router); 
+    ..mount('/visits', visitController.router)
+    ..mount('/trends', trendController.router); 
 
   final handler = Pipeline()
       .addMiddleware(logRequests())
