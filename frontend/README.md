@@ -1,6 +1,6 @@
-# MediCare AI - Health Intelligence App
+# Medbuddy - Health Intelligence App
 
-MediCare AI is a data-driven health platform that uses AI to analyze medical reports, track health trends over time, and provide personalized health challenges (Micro-Campaigns).
+Medibuddy is a data-driven health platform that uses AI to analyze medical reports, track health trends over time, and provide personalized health challenges (Micro-Campaigns).
 
 ## File Structure
 
