@@ -32,10 +32,10 @@ class AppSetup {
     /// =========================
     /// FIREBASE SERVICE ACCOUNT (BASE64)
     /// =========================
-    final base64ServiceAccount = env['FIREBASE_SERVICE_ACCOUNT_BASE64'];
+    final base64ServiceAccount = env['FIREBASE_SERVICE_ACCOUNT'];
 
     if (base64ServiceAccount == null || base64ServiceAccount.isEmpty) {
-      throw Exception('🚨 FIREBASE_SERVICE_ACCOUNT_BASE64 not found in .env');
+      throw Exception('🚨 FIREBASE_SERVICE_ACCOUNT not found in .env');
     }
 
     /// Decode Base64 → JSON
