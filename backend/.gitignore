@@ -3,3 +3,4 @@
 .dart_tool/
 .env
 firebase-admin.json
+firebase_temp.json
