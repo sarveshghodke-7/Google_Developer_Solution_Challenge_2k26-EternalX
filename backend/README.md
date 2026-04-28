@@ -1,4 +1,4 @@
-# MediCore Dart Backend
+# MedBuddy Dart Backend
 
 A lightweight, high-performance Dart API that extracts medical data from reports using **Gemini 2.5 Flash** and caches results using **Firebase Firestore**.
 
