@@ -44,6 +44,7 @@ Output exactly matching this structure:
         final fileBytes = base64Decode(base64File);
         final fileHash = sha256.convert(fileBytes).toString();
         print('Checking cache for hash: $fileHash');
+        final userId = request.context['userId'] as String?;
         
         final cacheRef = firestore.collection('report_cache').doc(fileHash);
         final cachedDoc = await cacheRef.get();
@@ -76,11 +77,50 @@ Output exactly matching this structure:
           'created_at': FieldValue.serverTimestamp,
         });
 
+        if (userId != null) {
+          await firestore.collection('users').doc(userId).collection('reports').add({
+            'hash': fileHash,
+            'toon_output': aiOutput,
+            'createdAt': FieldValue.serverTimestamp,
+          });
+        }
+
         return Response.ok(aiOutput, headers: {'Content-Type': 'text/plain'});
 
       } catch (e) {
         print('Error: $e');
         return Response.internalServerError(body: e.toString());
+      }
+    });
+
+    router.get('/list/<userId>', (Request request, String userId) async {
+      try {
+        final snapshot = await firestore
+            .collection('users')
+            .doc(userId)
+            .collection('reports')
+            .orderBy('createdAt', descending: true)
+            .get();
+
+        final List<Map<String, dynamic>> reportsList = [];
+        
+        for (var doc in snapshot.docs) {
+          final docData = doc.data() as Map<String, dynamic>;
+          // Remove timestamp to avoid JSON encoding issues
+          docData.remove('createdAt'); 
+          reportsList.add({
+            'id': doc.id,
+            ...docData,
+          });
+        }
+
+        return Response.ok(
+          jsonEncode(reportsList), 
+          headers: {'Content-Type': 'application/json'}
+        );
+      } catch (e) {
+        print('❌ Get Reports Error: $e');
+        return Response.internalServerError(body: 'Error fetching reports: $e');
       }
     });
 

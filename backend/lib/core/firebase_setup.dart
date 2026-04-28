@@ -2,10 +2,12 @@ import 'dart:io';
 import 'package:dotenv/dotenv.dart';
 import 'package:dart_firebase_admin/dart_firebase_admin.dart';
 import 'package:dart_firebase_admin/firestore.dart';
+import 'package:dart_firebase_admin/auth.dart';
 
 class AppSetup {
   static late final DotEnv env;
   static late final Firestore firestore;
+  static late final Auth auth;
   static late final String geminiApiKey;
 
   static Future<void> initialize() async {
@@ -24,6 +26,7 @@ class AppSetup {
       Credential.fromServiceAccount(File('firebase-admin.json')),
     );
     firestore = Firestore(admin);
-    print('Connected to Firebase Firestore: $projectId');
+    auth = Auth(admin);
+    print('Connected to Firebase Firestore & Auth: $projectId');
   }
 }
