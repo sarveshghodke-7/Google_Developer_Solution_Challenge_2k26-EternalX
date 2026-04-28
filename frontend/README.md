@@ -1,6 +1,6 @@
-# Medbuddy - Health Intelligence App
+# MedBuddy - Health Intelligence App
 
-Medibuddy is a data-driven health platform that uses AI to analyze medical reports, track health trends over time, and provide personalized health challenges (Micro-Campaigns).
+MedBuddy is a data-driven health platform that uses AI to analyze medical reports, track health trends over time, and provide personalized health challenges (Micro-Campaigns).
 
 ## File Structure
 
